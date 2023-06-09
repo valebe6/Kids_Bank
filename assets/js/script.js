@@ -1,6 +1,6 @@
 // LOGIN
 let contadorVerificacion = 3;
-let usuarios = {
+let cuentas = {
   jaime: {
     cuenta: "3246720301",
     saldo: 0,
@@ -27,12 +27,12 @@ let usuarios = {
     contraseña: "12345",
   },
 };
+let usuario = document.querySelector("#user");
+let contraseña = document.querySelector("#password");
 
 function iniciarSesion() {
-  let usuario = document.querySelector("#user");
-  let contraseña = document.querySelector("#password");
-  if (usuarios[usuario]) {
-    if (usuarios[usuario].contraseña === contraseña) {
+  if (cuentas[usuario]) {
+    if (cuentas[usuario].contraseña === contraseña) {
       location.href = "../";
     } else {
       contadorVerificacion--;
@@ -49,42 +49,18 @@ function iniciarSesion() {
       }
     }
   } else {
-    registrarNuevoUser(usuario.value, contraseña.value);
+    console.log("jajaja");
+
   }
 }
 
-function registrarNuevoUser(usuario, contraseña) {
-  let saldo = 0;
-  let cuenta = JSON.stringify(
-    Math.floor(Math.random() * 9999999999) + 1000000000
-  );
-  let cuentaVerificada = false;
-  while (!cuentaVerificada) {
-    for (let data in usuarios) {
-      if (usuarios[data].cuenta == cuenta) {
-      }
-    }
 
-    console.log(cuenta);
-    cuenta = JSON.stringify(
-      Math.floor(Math.random() * 9999999999) + 1000000000
-    );
-  }
-  let nuevoUser = {
-    cuenta,
-    saldo,
-    contraseña,
-  };
-  usuarios[usuario] = nuevoUser;
-  console.log(usuarios);
-}
 
 function limpiarInputs() {
   user.textContent = "";
   password.textContent = "";
 }
 function cerrarSesion() {
-  alert("Sesion Cerrada");
   return iniciarSesion();
 }
 
@@ -99,13 +75,13 @@ let seguirPuntero = true;
 body.addEventListener("mousemove", (m) => {
   if (seguirPuntero) {
     if (m.clientX < anchoMitad && m.clientY < altoMitad) {
-      monstruo.src = "../../img/login/monstruo_login1.png";
+      monstruo.src = "../img/login/monstruo_login1.png";
     } else if (m.clientX < anchoMitad && m.clientY > altoMitad) {
-      monstruo.src = "../../img/login/monstruo_login2.png";
+      monstruo.src = "../img/login/monstruo_login2.png";
     } else if (m.clientX > anchoMitad && m.clientY < altoMitad) {
-      monstruo.src = "../../img/login/monstruo_login3.png";
+      monstruo.src = "../img/login/monstruo_login3.png";
     } else {
-      monstruo.src = "../../img/login/monstruo_login4.png";
+      monstruo.src = "../img/login/monstruo_login4.png";
     }
   }
 });
@@ -113,11 +89,11 @@ body.addEventListener("mousemove", (m) => {
 user.addEventListener("keyup", () => {
   let usuario = user.value.length;
   if (usuario >= 0 && usuario <= 8) {
-    monstruo.src = "../../img/login/monstruo_login2.png";
+    monstruo.src = ".../img/login/monstruo_login2.png";
   } else if (usuario >= 9 && usuario <= 15) {
-    monstruo.src = "../../img/login/monstruo_login5.png";
+    monstruo.src = ".../img/login/monstruo_login5.png";
   } else {
-    monstruo.src = "../../img/login/monstruo_login4.png";
+    monstruo.src = ".../img/login/monstruo_login4.png";
   }
 });
 
@@ -131,9 +107,15 @@ user.addEventListener("blur", () => {
 
 password.addEventListener("focus", () => {
   seguirPuntero = false;
-  monstruo.src = "../../img/login/monstruo_password.png";
+  monstruo.src = ".../img/login/monstruo_password.png";
 });
 
 password.addEventListener("blur", () => {
   seguirPuntero = true;
 });
+
+function limpiarPantalla() {
+  numeroCuenta.value = "";
+  cantidadTransferir.value = "";
+}
+
