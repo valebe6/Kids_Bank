@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kids Bank</title>
+  </head>
+  <body>
+    <section id="login">
+      <img
+        id="monstruo_login"
+        src="../../img/login/monstruo_login.png"
+        alt="monstruo login"
+      />
+      <form class="formulario">
+        <p id="error"></p>
+        <label>Usuario - User</label>
+        <input type="text" placeholder="andres" id="user" />
+        <label>Contraseña - Password</label>
+        <input type="password" placeholder="*****" id="password" />
+        <input
+          onclick="iniciarSesion()"
+          type="button"
+          value="Iniciar sesion - Login"
+        />
+      </form>
+    </section>
+    <img src="./assets/img/Kids.png" alt="logo" />
+    <section id="menu_principal">
+      <button onclick="location.href=''" id="cerrar_sesion">
+        Cerrar sesión
+      </button>
+      <button onclick="location.href=''" id="consultar">Consultar Saldo</button>
+      <button onclick="location.href=''" id="retirar">Retirar dinero</button>
+      <button onclick="location.href=''" id="transferir">
+        Transferir dinero
+      </button>
+      <button onclick="location.href=''" id="movimientos">
+        Ver movimientos
+      </button>
+    </section>
+    <section id="imagenes">
+      <img src="" alt="monster_consultar" />
+      <img src="" alt="monster_retirar" />
+      <img src="" alt="monster_transferir" />
+      <img src="" alt="monster_movimientos" />
+    </section>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
