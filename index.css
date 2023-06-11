@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+* {
+  font-family: "VT323", monospace;
+}
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  } */
+body {
+  height: 97.5vh;
+  margin: 0;
+}
+#login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8b1b1;
+}
+.formulario_login {
+  width: 400px;
+  background-color: #ffd6d6;
+  border: 2px solid #ff0000;
+  border-radius: 10px;
+  padding: 30px 60px;
+}
+.formulario_login input,
+label {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+}
+.formulario_login input {
+  height: 40px;
+  border: 1px solid #ff0000;
+  background-color: #ffd8d8;
+  padding: 0 8px;
+  border-radius: 10px;
+}
+.formulario_login input[type="button"] {
+  cursor: pointer;
+  border: 2px solid #ff0000;
+  background-color: #ff2929;
+}
+.formulario_login input[type="button"]:hover {
+  cursor: pointer;
+  background-color: #ff0000;
+}
+img {
+  width: 290px;
+}
+.section_menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.section_menu.body_menu_principal {
+  gap: 19%;
+}
+.section_menu#imagenes {
+  gap: 15%;
+  margin-top: 5%;
+}
+.section_menu.logo {
+  width: 300px;
+}
+.section_menu button#cerrar_sesion {
+  height: 30px;
+  border: 2px solid black;
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  left: 25%;
+}
+.section_menu button#cerrar_sesion:hover {
+  background-color: black;
+  color: white;
+}
+.section_menu button.consultar {
+  height: 80px;
+  width: 120px;
+  border: 2px solid rgb(62, 58, 255);
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.section_menu button.consultar:hover {
+  background-color: rgb(62, 58, 255);
+  color: white;
+}
+.section_menu button.retirar {
+  height: 80px;
+  width: 120px;
+  border: 2px solid rgb(255, 242, 58);
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.section_menu button.retirar:hover {
+  background-color: rgb(255, 242, 58);
+}
+.section_menu button.transferir {
+  height: 80px;
+  width: 120px;
+  border: 2px solid rgb(78, 201, 133);
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.section_menu button.transferir:hover {
+  background-color: rgb(78, 201, 133);
+  color: white;
+}
+.section_menu button.consignar {
+  height: 80px;
+  width: 120px;
+  border: 2px solid rgb(253, 83, 162);
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.section_menu button.consignar:hover {
+  background-color: rgb(253, 83, 162);
+  color: black;
+}
+.img {
+  transition: opacity 1s;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14%;
+  margin-top: 2%;
+}
+.logo {
+  width: 180px;
+  padding-left: 10%;
+}
+.botones {
+  border: 1px solid black;
+  width: 110px;
+  height: 28px;
+  border-radius: 5px;
+  font-size: 17px;
+}
+.botonCerrarSesion {
+  background-color: yellow;
+  margin-left: 10%;
+}
+.botonVolver {
+  background-color: rgb(255, 255, 134);
+  margin-right: 5%;
+}
+.img_formulario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18%;
+  margin-top: 10%;
+}
+.monster {
+  width: 300px;
+}
+.formulario {
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 300px;
+  justify-content: start;
+  align-items: center;
+  gap: 15px;
+  background-color: rgb(255, 255, 65);
+  text-align: center;
+}
+.titulo {
+  padding-top: 20px;
+  padding-bottom: 40px;
+  font-size: 35px;
+}
+.inputRetirar {
+  margin-bottom: 10px;
+  width: 70%;
+  height: 30px;
+  border: 1px solid black;
+  background-color: rgb(251, 255, 192);
+  border-radius: 5px;
+  font-size: 18px;
+}
+.botonRetirar {
+  background-color: rgb(255, 255, 145);
+}
+.sugerencia {
+  font-size: 20px;
+}
