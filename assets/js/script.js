@@ -1,32 +1,32 @@
 let contadorVerificacion = 3;
 const sectionPadre = document.querySelector(`#padre`);
-
+let cuenta_iniciada = "";
 loginDom();
 
 let cuentas = {
   jaime: {
     cuenta: "3246720301",
-    saldo: 0,
+    saldo: 1000,
     contraseña: "12345",
   },
   andres: {
     cuenta: "3113567941",
-    saldo: 0,
+    saldo: 1000,
     contraseña: "12345",
   },
   stiven: {
     cuenta: "3045580999",
-    saldo: 0,
+    saldo: 1000,
     contraseña: "12345",
   },
   kevin: {
     cuenta: "3185471976",
-    saldo: 100000,
+    saldo: 1000,
     contraseña: "12345",
   },
   valentina: {
     cuenta: "3016365181",
-    saldo: 0,
+    saldo: 1000,
     contraseña: "12345",
   },
 };
@@ -116,6 +116,7 @@ function iniciarSesion() {
     cuentas[usuario.value] &&
     cuentas[usuario.value].contraseña === contraseña.value
   ) {
+    cuenta_iniciada = usuario.value;
     menuDom();
   } else {
     contadorVerificacion--;
@@ -126,12 +127,11 @@ function iniciarSesion() {
     if (contadorVerificacion == 0) {
       let error = document.querySelector("#error");
       error.textContent = `Intentó 3 inicios de sesión, su cuenta ha sido bloqueada, acerquese a una sucursal para desbloquearla`;
-      bloquearInputs();
+      bloquearInputs(usuario, contraseña);
     }
   }
 }
-
-function bloquearInputs() {
+function bloquearInputs(usuario, contraseña) {
   let boton = document.querySelector("#boton");
   usuario.disabled = true;
   contraseña.disabled = true;
@@ -150,72 +150,68 @@ function consultarSaldo() {
 }
 
 function consignarDinero() {
-  let cuentaInvalida = document.querySelector(`#cuentaInvalida`);
-  let cuentaUsando = "3185471976"; //docuemnt.querySelector(`#user`);
-  let valorConsignar = document.querySelector(`#valorConsignar`).value;
-  for (let key in cuentas) {
-    if (cuentas[key].cuenta === cuentaUsando) {
-      cuentas[key].saldo += valorConsignar;
-      cuentaInvalida.textContent = `Consignación Exitosa\nSualdo actual\n${cuentas[key].saldo}`;
-      limpiarPantalla();
-    } else {
-      cuentaInvalida.textContent = `Cuenta Invalida`;
-      limpiarPantalla();
+  let valorConsignar = parseInt(
+    document.querySelector(`#valorConsignar`).value
+  );
+  let numeroCuenta = document.querySelector(`#cuentaDestino`).value;
+
+  let cuentaDestino = false;
+  let mensaje = "";
+  for (let cuenta in cuentas) {
+    if (cuentas[cuenta].cuenta === numeroCuenta) {
+      cuentaDestino = cuenta;
+      break;
     }
   }
+
+  if (cuentaDestino) {
+    cuentas[cuentaDestino].saldo += valorConsignar;
+    mensaje = "Se ha consignado " + valorConsignar;
+  } else {
+    mensaje = "El numero de cuenta no existe";
+  }
+  document.getElementById("mensaje").innerHTML = mensaje;
 }
 
 function retirarDinero() {
-  let parrafo = document.querySelector(`#parrafo`);
-  let cuentaUsando = "3185471976"; //docuemnt.querySelector(`#user`);
   let valorRetirar = document.querySelector(`#valorRetirar`).value;
-  for (let key in cuentas) {
-    if (cuentas[key].cuenta === cuentaUsando) {
-      if (valorRetirar <= cuentas[key].saldo) {
-        cuentas[key].saldo -= valorRetirar;
-        parrafo.textContent = `Retiro Exitoso\nSualdo actual\n${cuentas[key].saldo}`;
-      } else {
-        parrafo.textContent = `No tiene saldo suficiente`;
-      }
-    } else {
-      parrafo.textContent = `Cuenta Invalida`;
-    }
+  let mensaje = "";
+  if (valorRetirar < cuentas[cuenta_iniciada].saldo) {
+    cuentas[cuenta_iniciada].saldo -= valorRetirar;
+    mensaje = "Se ha retirado " + valorRetirar;
+  } else {
+    mensaje = "No tiene saldo suficiente";
   }
+  document.getElementById("mensaje").innerHTML = mensaje;
 }
 
 function transferirDinero() {
-  let numeroCuenta = document.querySelector(`#numeroCuenta`).value;
-  let cantidadTransferir = parseFloat(
-    document.querySelector(`#dineroTranferir`).value
+  let numeroCuenta = document.querySelector(`#cuentaDestino`).value;
+  let cantidadTransferir = parseInt(
+    document.querySelector(`#valorTransferir`).value
   );
-  let cuentaInvalida = document.querySelector(`#cuentaInvalida`);
-  let cuentaUsando = "3185471976"; //docuemnt.querySelector(`#user`);
-
-  for (let key in cuentas) {
-    if (cuentas[key].cuenta === numeroCuenta) {
-      console.log(`cuenta valida`);
-      for (let kay in cuentas) {
-        if (cuentas[kay].cuenta === cuentaUsando) {
-          if (cuentas[kay].saldo > cantidadTransferir) {
-            cuentas[key].saldo += cantidadTransferir;
-            cuentaInvalida.textContent = `Transferencia Exitosa`;
-            cuentas[kay].saldo -= cantidadTransferir;
-          } else {
-            cuentaInvalida.textContent = `No tiene saldo suficiente`;
-            limpiarPantalla();
-          }
-        }
-      }
-
-      return cuentas;
-    } else {
-      cuentaInvalida.textContent = `Cuenta Invalida`;
-      limpiarPantalla();
+  let cuentaDestino = false;
+  for (let cuenta in cuentas) {
+    if (cuentas[cuenta].cuenta === numeroCuenta) {
+      cuentaDestino = cuenta;
+      break;
     }
-    limpiarPantalla();
   }
-
-  return false;
+  mensaje = "";
+  if (cuentaDestino) {
+    console.log(cantidadTransferir, cuentas[cuenta_iniciada].saldo);
+    if (cantidadTransferir < cuentas[cuenta_iniciada].saldo) {
+      cuentas[cuentaDestino].saldo += cantidadTransferir;
+      cuentas[cuenta_iniciada].saldo -= cantidadTransferir;
+      mensaje = "Se ha transferido " + cantidadTransferir;
+    } else {
+      mensaje = "No tienen saldo suficiente";
+    }
+  } else {
+    mensaje = "La cuenta no exite";
+  }
+  document.getElementById("mensaje").innerHTML = mensaje;
+  console.log(cuentas);
 }
 
 function menuDom() {
@@ -297,7 +293,7 @@ function consultarDineroDom() {
 </section>
 <section class="img_formulario">
   <img src="./assets/img/monsters/azul.png" alt="monster" class="monster">
-  <form class="formulario">
+  <form class="formulario" style="background-color: rgb(62, 58, 255)">
       <label class="titulo">CONSULTAR</label>   
       <label class="sugerencia">Saldo</label>
       <label id="saldo"></label>
@@ -307,6 +303,7 @@ function consultarDineroDom() {
     </section>
   `;
   sectionPadre.innerHTML = template;
+  document.getElementById("saldo").innerHTML = cuentas[cuenta_iniciada].saldo;
 }
 
 function consignarDineroDom() {
@@ -320,14 +317,15 @@ function consignarDineroDom() {
   <button id="volver_menu" onclick="menuDom()" class="botonVolver botones">Volver al menú</button>
 </section>
 <section class="img_formulario">
-  <img src="./assets/img/monsters/amarillo.png" alt="monster" class="monster">
-  <form class="formulario">
+  <img src="./assets/img/monsters/rosado.png" alt="monster" class="monster">
+  <form class="formulario" style="background-color: pink">
       <label class="titulo">CONSIGNAR</label>
       <label class="sugerencia">Valor a consignar</label>
-      <input type="number" id="valorConsignar" class="inputconsignar">      
+      <input type="number" id="valorConsignar" class="inputDiseño">      
       <label class="sugerencia">Cuenta destino</label>
-      <input type="number" id="cuentaDestino" class="inputconsignar">
-      <button onclick="consignarDinero()" class="botonConsignar botones">Consignar</button>
+      <input type="number" id="cuentaDestino" class="inputDiseño">
+      <button onclick="consignarDinero()" type="button" class="botonConsignar botonAcciones">Consignar</button>
+      <p id="mensaje"></p>
   </form>
 </section>
 </section>
@@ -347,14 +345,15 @@ function transferirDineroDom() {
   <button id="volver_menu" onclick="menuDom()" class="botonVolver botones">Volver al menú</button>
 </section>
 <section class="img_formulario">
-  <img src="./assets/img/monsters/amarillo.png" alt="monster" class="monster">
-  <form class="formulario">
+  <img src="./assets/img/monsters/verde.png" alt="monster" class="monster">
+  <form class="formulario" style="background-color: lightgreen">
       <label class="titulo">TRANSFERIR</label>
       <label class="sugerencia">Valor a transferir</label>
-      <input type="number" id="valorTransferir" class="inputTransferir">      
+      <input type="number" id="valorTransferir" class="inputDiseño">      
       <label class="sugerencia">Cuenta destino</label>
-      <input type="number" id="cuentaDestino" class="inputTransferir">
-      <button class="botonTransferir botones">Transferir</button>
+      <input type="number" id="cuentaDestino" class="inputDiseño">
+      <button class="botonTransferir botonAcciones" onclick="transferirDinero()" type="button">Transferir</button>
+      <p id="mensaje"></p>
   </form>
 </section>
 </section>
@@ -378,8 +377,9 @@ function retirarDineroDom() {
   <form class="formulario">
       <label class="titulo">RETIRAR</label>
       <label class="sugerencia">Valor a retirar</label>
-      <input type="number" id="valorRetirar" class="inputRetirar">
-      <button class="botonRetirar botones">Retirar</button>
+      <input type="number" id="valorRetirar" class="inputDiseño">
+      <button class="botonRetirar botonAcciones" onclick="retirarDinero()" type="button">Retirar</button>
+      <p id="mensaje"></p>
   </form>
 </section>
 </section>
